@@ -1,13 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="./src/styles/style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Media Carousel - TS</title>
   </head>
   <body>
-    <div id="app"></div>
+    <h1>Media Carousel</h1>
+    <div id="slide-container">
+      <div id="slide-elements">
+        <img src="./assets/imagem_1.jpg" alt="Lobo" class="active" />
+        <img src="./assets/imagem_2.jpg" alt="Lobo" />
+        <img src="./assets/imagem_3.jpg" alt="Lobo" />
+        <video playsinline src="./assets/video.mp4"></video>
+        <!-- "playsinline" to not maximize video on play (mobile) -->
+      </div>
+
+      <div id="slide-controls"></div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
