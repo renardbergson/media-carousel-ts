@@ -1,24 +1,37 @@
 class Slide {
   container;
-  elements;
+  slides;
   controls;
   time;
+  index: number;
+  active: Element;
 
   constructor(
     container: Element,
-    elements: Element[],
+    slides: Element[],
     controls: Element,
     time: number = 5000
   ) {
     this.container = container;
-    this.elements = elements;
+    this.slides = slides;
     this.controls = controls;
     this.time = time;
 
-    console.log(this.container);
-    console.log(this.elements);
-    console.log(this.controls);
-    console.log(this.time);
+    this.index = 0;
+    this.active = this.slides[this.index];
+
+    this.show(this.index);
+  }
+
+  show(index: number) {
+    this.index = index;
+    this.active = this.slides[this.index];
+    this.slides.forEach((slide) => this.hide(slide));
+    this.active.classList.add("active");
+  }
+
+  hide(slide: Element) {
+    slide.classList.remove("active");
   }
 }
 

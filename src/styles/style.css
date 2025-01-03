@@ -19,7 +19,6 @@ video {
 }
 
 #slide-elements > * {
-  /* all direct children */
   grid-area: 1/1;
   opacity: 0;
   visibility: none;
