@@ -20,7 +20,33 @@ class Slide {
     this.index = 0;
     this.active = this.slides[this.index];
 
+    this.init();
+  }
+
+  private init() {
     this.show(this.index);
+    this.addControls();
+  }
+
+  prev() {
+    const previous = this.index > 0 ? this.index - 1 : this.slides.length - 1;
+    this.show(previous);
+  }
+
+  next() {
+    const next = this.index + 1 < this.slides.length ? this.index + 1 : 0;
+    this.show(next);
+  }
+
+  private addControls() {
+    const prevButton = document.createElement("button");
+    const nextButton = document.createElement("button");
+    prevButton.innerText = "previous slide";
+    nextButton.innerText = "next slide";
+    this.controls.appendChild(prevButton);
+    this.controls.appendChild(nextButton);
+    prevButton.addEventListener("pointerup", () => this.prev());
+    nextButton.addEventListener("pointerup", () => this.next());
   }
 
   show(index: number) {

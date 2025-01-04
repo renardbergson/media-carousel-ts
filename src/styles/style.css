@@ -14,7 +14,24 @@ video {
   width: 100%;
 }
 
+#slide-container {
+  display: grid;
+}
+
+#slide-controls {
+  grid-area: 1/1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+#slide-controls button {
+  opacity: 0;
+  appearance: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* mobile */
+}
+
 #slide-elements {
+  grid-area: 1/1;
   display: grid;
 }
 
