@@ -10,6 +10,8 @@ class Slide {
   timeout: TimeOut | null;
   isPaused: boolean;
   pausedTimeout: TimeOut | null;
+  thumbItems: HTMLElement[] | null;
+  thumb: HTMLElement | null;
 
   constructor(
     container: Element,
@@ -24,21 +26,34 @@ class Slide {
     this.timeout = null;
     this.isPaused = false;
     this.pausedTimeout = null;
-
     this.index = Number(sessionStorage.getItem("activeSlide")) | 0;
     this.active = this.slides[this.index];
+    this.thumbItems = null;
+    this.thumb = null;
 
     this.init();
   }
 
   private init() {
-    this.show(this.index);
     this.addControls();
+    this.addThumbItems();
+    this.show(this.index);
+  }
+
+  private addThumbItems() {
+    const thumbContainer = document.createElement("div");
+    thumbContainer.id = "thumb-container";
+    for (let index = 0; index < this.slides.length; index++) {
+      thumbContainer.innerHTML += `<span><span class="thumb-item"></span></span>`;
+    }
+    this.controls.appendChild(thumbContainer);
+    this.thumbItems = Array.from(document.querySelectorAll(".thumb-item"));
   }
 
   autoPlay(time: number) {
     this.timeout?.clear();
     this.timeout = new TimeOut(() => this.next(), time);
+    if (this.thumb) this.thumb.style.animationDuration = `${time}ms`;
   }
 
   playVideo(video: HTMLVideoElement) {
@@ -69,8 +84,9 @@ class Slide {
     this.pausedTimeout = new TimeOut(() => {
       this.timeout?.pause();
       this.isPaused = true;
+      this.thumb?.classList.add("paused");
       if (this.active instanceof HTMLVideoElement) this.active.pause();
-    }, 300);
+    }, 200);
   }
 
   continue() {
@@ -78,6 +94,7 @@ class Slide {
     if (this.isPaused) {
       this.timeout?.continue();
       this.isPaused = false;
+      this.thumb?.classList.remove("paused");
       if (this.active instanceof HTMLVideoElement) this.active.play();
     }
   }
@@ -102,7 +119,14 @@ class Slide {
     this.active = this.slides[this.index];
     this.slides.forEach((slide) => this.hide(slide));
     this.active.classList.add("active");
+
     sessionStorage.setItem("activeSlide", String(this.index));
+
+    if (this.thumbItems) {
+      this.thumbItems.forEach((thumb) => this.hide(thumb));
+      this.thumb = this.thumbItems[this.index];
+      this.thumb.classList.add("active");
+    }
 
     if (this.active instanceof HTMLVideoElement) {
       this.playVideo(this.active);

@@ -22,6 +22,7 @@ video {
   grid-area: 1/1;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  position: relative;
 }
 
 #slide-controls button {
@@ -44,4 +45,41 @@ video {
 #slide-elements > .active {
   opacity: 1;
   visibility: visible;
+}
+
+#thumb-container {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  pointer-events: none;
+}
+
+#thumb-container > span {
+  flex: 1;
+  display: block;
+  width: 100%;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin: 5px;
+  border-radius: 4px;
+  isolation: isolate; /* safari, iOS */
+}
+
+#thumb-container .thumb-item.active {
+  display: block;
+  height: inherit;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 4px;
+  width: 0;
+  animation: thumb /* duration from JS */ forwards linear running;
+}
+
+#thumb-container .thumb-item.paused {
+  animation-play-state: paused;
+}
+
+@keyframes thumb {
+  to {
+    width: 100%;
+  }
 }
