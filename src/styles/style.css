@@ -3,6 +3,14 @@ body {
   margin: 20px;
 }
 
+body.paused {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+}
+
 h1 {
   text-align: center;
   font-size: 1.5rem;
@@ -16,6 +24,11 @@ video {
 
 #slide-container {
   display: grid;
+  border-radius: 4px;
+  overflow: hidden;
+  max-width: 90%;
+  margin: 20px auto;
+  background-color: black;
 }
 
 #slide-controls {

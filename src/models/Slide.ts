@@ -37,6 +37,10 @@ class Slide {
   private init() {
     this.addControls();
     this.addThumbItems();
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") this.prev();
+      if (e.key === "ArrowRight") this.next();
+    });
     this.show(this.index);
   }
 
@@ -81,6 +85,7 @@ class Slide {
   }
 
   pause() {
+    document.body.classList.add("paused");
     this.pausedTimeout = new TimeOut(() => {
       this.timeout?.pause();
       this.isPaused = true;
@@ -90,6 +95,7 @@ class Slide {
   }
 
   continue() {
+    document.body.classList.remove("paused");
     this.pausedTimeout?.clear();
     if (this.isPaused) {
       this.timeout?.continue();
@@ -108,7 +114,8 @@ class Slide {
     this.controls.appendChild(nextButton);
 
     this.controls.addEventListener("pointerdown", () => this.pause());
-    this.controls.addEventListener("pointerup", () => this.continue());
+    document.addEventListener("pointerup", () => this.continue());
+    document.addEventListener("touchend", () => this.continue());
 
     prevButton.addEventListener("pointerup", () => this.prev());
     nextButton.addEventListener("pointerup", () => this.next());
