@@ -30,18 +30,26 @@ class Slide {
     this.active = this.slides[this.index];
     this.thumbItems = null;
     this.thumb = null;
-
-    this.init();
   }
 
-  private init() {
+  init() {
     this.addControls();
     this.addThumbItems();
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowLeft") this.prev();
-      if (e.key === "ArrowRight") this.next();
-    });
+    this.addKeyListeners();
     this.show(this.index);
+  }
+
+  private addKeyListeners() {
+    document.addEventListener("keydown", (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        this.prev();
+      }
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        this.next();
+      }
+    });
   }
 
   private addThumbItems() {

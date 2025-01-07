@@ -9,7 +9,6 @@ class TimeOut {
     this.id = setTimeout(handler, time);
     this.startTime = Date.now();
     this.timeLeft = time;
-    // console.log(this.timeLeft);
   }
 
   clear() {
